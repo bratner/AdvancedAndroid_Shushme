@@ -10,8 +10,8 @@
         android:theme="@style/AppTheme">
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="insert-your-api-key-here" />
+        android:name="com.google.android.geo.API_KEY"
+        android:value="${placesAPIKey}"/>
 
         <activity android:name="com.example.android.shushme.MainActivity">
             <intent-filter>
