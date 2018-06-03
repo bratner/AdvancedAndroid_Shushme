@@ -16,9 +16,12 @@ package com.example.android.shushme;
 * limitations under the License.
 */
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,6 +46,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements
         ConnectionCallbacks,
         OnConnectionFailedListener {
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
     // Member variables
     private PlaceListAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private GoogleApiClient mApiClient;
 
     /**
      * Called when the activity is starting
@@ -77,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements
         // Build up the LocationServices API client
         // Uses the addApi method to request the LocationServices API
         // Also uses enableAutoManage to automatically when to connect/suspend the client
-        GoogleApiClient client = new GoogleApiClient.Builder(this)
+        mApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -92,6 +98,19 @@ public class MainActivity extends AppCompatActivity implements
         // - Calls Places.GeoDataApi.getPlaceById with that list of IDs
         // Note: When calling Places.GeoDataApi.getPlaceById use the same GoogleApiClient created
         // in MainActivity's onCreate (you will have to declare it as a private member)
+    private void refreshPlacesData() {
+        ContentResolver resolver = getContentResolver();
+
+        final Cursor cursor = resolver.query(PlaceContract.PlaceEntry.CONTENT_URI,
+                null, null, null, null);
+        ArrayList<String> place_ids = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            place_ids.add(cursor.getString(cursor.getColumnIndex(PlaceContract.PlaceEntry.COLUMN_PLACE_ID)));
+        }
+        Log.d(TAG, "Refreshing places. Got "+place_ids.size()+" ids.");
+        Places.GeoDataApi.getPlaceById(mApiClient, )
+
+    }
 
     //TODO (8) Set the getPlaceById callBack so that onResult calls the Adapter's swapPlaces with the result
 
@@ -200,5 +219,13 @@ public class MainActivity extends AppCompatActivity implements
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSIONS_REQUEST_FINE_LOCATION);
+    }
+
+    public void onPoweredByGoogleClick(View view) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse("http://developers.google.com"));
+        startActivity(intent);
     }
 }
