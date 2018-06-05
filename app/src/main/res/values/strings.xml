@@ -9,4 +9,7 @@
     <string name="location_permissions">Location Permissions</string>
     <string name="enable_geofences">Enable Geofences</string>
     <string name="privacy">http://www.google.com/policies/privacy</string>
+    <string name="notification_permissions">Notification Permissions</string>
+    <string name="silent_mode_activated">Silent mode activeated!</string>
+    <string name="silent_mode_deactivated">Silent mode DEactivated!</string>
 </resources>

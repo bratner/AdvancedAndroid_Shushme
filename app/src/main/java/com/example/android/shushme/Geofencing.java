@@ -136,6 +136,7 @@ public class Geofencing implements ResultCallback {
      * @return the GeofencingRequest object
      */
     private GeofencingRequest getGeofencingRequest() {
+
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
         builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
         builder.addGeofences(mGeofenceList);
