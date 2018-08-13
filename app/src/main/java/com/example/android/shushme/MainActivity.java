@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    // TODO (1) Implement a method called refreshPlacesData that:
-        // - Queries all the locally stored Places IDs
-        // - Calls Places.GeoDataApi.getPlaceById with that list of IDs
-        // Note: When calling Places.GeoDataApi.getPlaceById use the same GoogleApiClient created
-        // in MainActivity's onCreate (you will have to declare it as a private member)
+    // DONE (1) Implement a method called refreshPlacesData that:
+    // - Queries all the locally stored Places IDs
+    // - Calls Places.GeoDataApi.getPlaceById with that list of IDs
+    // Note: When calling Places.GeoDataApi.getPlaceById use the same GoogleApiClient created
+    // in MainActivity's onCreate (you will have to declare it as a private member)
     private void refreshPlacesData() {
         ContentResolver resolver = getContentResolver();
 
